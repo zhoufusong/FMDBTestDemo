@@ -25,35 +25,29 @@ class ViewController: UIViewController {
 
     @IBAction func CreateTable(_ sender: UIButton) {
         print("\(#function)")
-        
-        let fileManager = FileManager.default
+
         
         guard let dbPath = self.dbPath else{
             return;
         }
-        
-        if fileManager.fileExists(atPath: dbPath){
             
-            let db = FMDatabase(path: dbPath)
+        let db = FMDatabase(path: dbPath)
             
-            if(db.open()){
+        if(db.open()){
                 
-                let sql = "CREATE TABLE 'User' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL , 'name' VARCHAR(30), 'password' VARCHAR(30))"
-                let res = db.executeUpdate(sql, withArgumentsIn: [])
+            let sql = "CREATE TABLE 'User' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL , 'name' VARCHAR(30), 'password' VARCHAR(30))"
+            let res = db.executeUpdate(sql, withArgumentsIn: [])
                 
-                if !res{
-                    print("create database error!")
-                }else{
-                    print("success to create database")
-                }
-            
-                db.close()
+            if !res{
+                print("create database error!")
             }else{
-                print("open database error!")
+                print("success to create database")
             }
-        
+            
+            db.close()
+        }else{
+            print("open database error!")
         }
-        
     }
     
     var id = 1
